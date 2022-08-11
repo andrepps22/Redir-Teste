@@ -1,0 +1,84 @@
+<div class="form-group col-md-2 mb-3">
+    <label for="empresa">Empresa</label>
+    <select class="form-control" name="empresa" id="empresa" required disabled>
+        <option value="{{redir_view.empresa}}">{{redir_view.empresa}}</option>
+    </select>
+</div>
+
+<br>
+
+<div class="form-group col-md-2 mb-3">
+    <label for="Classificacao_informacao">Classificacao_informacao</label>
+    <select class="form-control" name="Classificacao_informacao" id="Classificacao_informacao" disabled>
+        <option value="{{redir_view.class_inf}}">{{redir_view.class_inf}}</option>
+    </select>
+</div>
+
+<br>
+
+<div class="form-group col-md-4 mb-3">
+    <label for="Assunto">Assunto</label>
+    <input class="form-control input-md" type="text" name="Assunto" value="{{redir_view.assunto}}" size="60" maxlength="255" required disabled>
+</div>
+
+<br>
+
+<div class="form-group col-md-4 mb-3">
+    <label for="Objeto">Objeto</label>
+    <input class="form-control input-md" type="text" name="objeto" value="{{redir_view.objecto}}" size="60" maxlength="255" required disabled>
+</div>
+
+<br>
+
+<div class="form-group">
+    <label for="Contextualizacao">Contextualização</label>
+    <textarea class="form-control" name="contextualizacao" id="contextualizacao" cols="30" rows="10" required disabled>{{redir_view.contextualizacao}}</textarea>
+</div>
+
+<br>
+
+<div class="form-group col-md-2 mb-3">
+    <label for="Valor_previsto">Valor Previsto R$</label>
+    <input class="form-control input-md" type="text" name="Valor_previsto" value="{{redir_view.valor_previsto}}" size="60" maxlength="20" required disabled>
+</div>
+
+<br>
+
+<div class="form-group col-md-2 mb-3">
+    <label for="Valor a ser pago">Valor que será pago R$</label>
+    <input class="form-control input-md" type="text" name="Valor_para_ser_pago" value="{{redir_view.valor_a_ser_pago}}" size="60" maxlength="20" required disabled>
+</div>
+
+<br>
+
+<div class="form-group col-md-2 mb-3">
+    <label for="Rateado"> Rateado </label>
+    <select  class="form-control" name="rateado" id="rateado" required disabled>
+        <option value="{{redir_view.rateado}}">{{redir_view.rateado}}</option>
+    </select>
+</div>
+
+<br>
+
+<div class="form-group">
+    <label for="conlcusao">conlcusao</label>
+    <textarea class="form-control" name="conclusao" id="conclusao" cols="30" rows="10" required disabled>{{redir_view.conclusao}}</textarea>
+</div>
+
+<br>     
+
+<div class="form-group col-md-4 mb-3">
+    <label for="anexar_arquivo">Arquivo Anexado</label><br>
+    {% if redir_editar.anexo_arquivo %}
+        <a href="{{redir_editar.anexo_arquivo.url}}">Verificar aquivo Anexado</a>
+    {% else %}
+        Sem Aquivo Anexado
+    {% endif %}
+</div>
+
+<div class="form-group col-md-2 mb-3">
+    <label for="apreciado_internamente">Apreciado internamente</label>
+    <select class="form-control" name="apreciado_internamente" id="apreciado_internamente" disabled>
+        <option value="{{redir_view.apreciamento_interno}}">{{redir_view.apreciamento_interno}}</option>
+    </select>
+</div>

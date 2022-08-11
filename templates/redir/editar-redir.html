@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  
+<header class="mx-sm-3">
+    <h2>Editar Processo Redir</h2>
+
+    
+    <br><br>
+</header>
+<main class="mx-sm-3">
+    <form action="{% url 'redir.atualizar' %}" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <input type="text" name="redir_id" class="form-control" value="{{redir_editar.id}}" hidden>
+        {% if redir_editar.usuario_id != request.user.id %}
+            {% include "partials/_editar.html" %}
+
+        {% else %}
+                <div class="form-group col-md-2 mb-3">
+                    <label for="empresa">Empresa</label>
+                    <select class="form-control" name="empresa" id="empresa" required>
+                        <option value="{{redir_editar.empresa}}">{{redir_editar.empresa}}</option>
+                        <option value="Fundacao">Fundação</option>
+                        <option value="Fusan">Fusan</option>
+                        <option value="Fundacoes">Fundações</option>
+                    </select>
+                </div>
+
+                <br>
+
+                <div class="form-group col-md-2 mb-3">
+                    <label for="Classificacao_informacao">Classificacao_informacao</label>
+                    <select class="form-control" name="Classificacao_informacao" id="Classificacao_informacao">
+                        <option value="{{redir_editar.class_inf}}">{{redir_editar.class_inf}}</option>
+                        <option value="Publica "> 00 - publica </option>
+                        <option value="Corporativa "> 10 - corporativa </option>
+                        <option value="Interna "> 20 - interna </option>
+                        <option value="Restrita "> 30 - restrita </option>
+                        <option value="Confidencial "> 40 - confidencial </option>
+                    </select>
+                </div>
+
+                <br>
+
+                <div class="form-group col-md-4 mb-3">
+                    <label for="Assunto">Assunto</label>
+                    <input class="form-control input-md" type="text" name="Assunto" value="{{redir_editar.assunto}}" size="60" maxlength="255" required>
+                </div>
+
+                <br>
+
+                <div class="form-group col-md-4 mb-3">
+                    <label for="Objeto">Objeto</label>
+                    <input class="form-control input-md" type="text" name="objeto" value="{{redir_editar.objecto}}" size="60" maxlength="255" required>
+                </div>
+
+                <br>
+
+                <div class="form-group">
+                    <label for="Contextualizacao">Contextualização</label>
+                    <textarea class="form-control" name="contextualizacao" id="contextualizacao" cols="30" rows="10" required>{{redir_editar.contextualizacao}}</textarea>
+                </div>
+
+                <br>
+
+                <div class="form-group col-md-2 mb-3">
+                    <label for="Valor_previsto">Valor Previsto R$</label>
+                    <input class="form-control input-md" type="text" name="Valor_previsto" value="{{redir_editar.valor_previsto}}" size="60" maxlength="20" required>
+                </div>
+
+                <br>
+
+                <div class="form-group col-md-2 mb-3">
+                    <label for="Valor a ser pago">Valor que será pago R$</label>
+                    <input class="form-control input-md" type="text" name="Valor_para_ser_pago" value="{{redir_editar.valor_a_ser_pago}}" size="60" maxlength="20" required>
+                </div>
+
+                <br>
+
+                <div class="form-group col-md-2 mb-3">
+                    <label for="Rateado"> Rateado </label>
+                    <select  class="form-control" name="rateado" id="rateado" required>
+                        <option value="{{redir_editar.rateado}}">{{redir_editar.rateado}}</option>
+                        <option value="Nao"> Não </option>
+                        <option value="Sim"> Sim </option>
+                    </select>
+                </div>
+
+                <br>
+
+                <div class="form-group">
+                    <label for="conlcusao">conlcusao</label>
+                    <textarea class="form-control" name="conclusao" id="conclusao" cols="30" rows="10" required>{{redir_editar.conclusao}}</textarea>
+                </div>
+
+                <br>
+
+
+                <div class="form-group col-md-4 mb-3">
+                    <label for="anexar_arquivo">Arquivo Anexado</label><br>
+                    {% if redir_editar.anexo_arquivo %}
+                        <a href="{{redir_editar.anexo_arquivo.url}}">Verificar aquivo Anexado</a>
+                    {% else %}
+                        Sem Aquivo Anexado
+                    {% endif %}
+                </div>
+                
+
+                <div class="form-group col-md-4 mb-3">
+                    <label for="anexar_arquivo">Anexar Novo Arquivo</label>
+                    <input class="form-control input-md" type="file" name="anexar_arquivo" id="anexar-arquivo">
+                </div>
+
+                <div class="form-group col-md-2 mb-3">
+                    <label for="apreciado_internamente">Apreciado internamente</label>
+                    <select class="form-control" name="apreciado_internamente" id="apreciado_internamente" required>
+                        <option value="{{redir_editar.apreciamento_interno}}">{{redir_editar.apreciamento_interno}}</option>
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                    </select>
+                </div>
+        {% endif %}
+
+        {% if request.user.cargo == 'Diretor' %}
+            {% if request.user.diretoria == 'DAF' %}
+                <div class="form-group">
+                    <label for="parecer_daf">Parecer DAF</label>
+                    <textarea class="form-control" name="parecer_daf" cols="30" rows="10" required>{{redir_editar.parecer_daf}}</textarea>
+                </div>
+                
+            {% endif %}
+            {% if request.user.diretoria == 'DO-DSG' %}
+                <div class="form-group">
+                    <label for="parecer_do">Parecer DO</label>
+                    <textarea class="form-control" name="parecer_do" cols="30" rows="10" required>{{redir_editar.parecer_do}}</textarea>
+                </div>
+                
+            {% endif %}
+            {% if request.user.diretoria == 'DP' %}
+                <div class="form-group">
+                    <label for="parecer_daf">Parecer DP</label>
+                    <textarea class="form-control" name="parecer_dp" cols="30" rows="10" required>{{redir_editar.parecer_dp}}</textarea>
+                </div>
+                
+            {% endif %}
+          
+        {% endif %}
+        
+        {% if request.user.gerencia == 'GGE' %}
+            <div class="form-group">
+                <label for="parecer_gge">Parecer GGE</label>
+                <textarea class="form-control" name="parecer_gge" cols="30" rows="10" required>{{redir_editar.parecer_gge}}</textarea>
+            </div>
+            
+        {% endif %}
+
+        <br>
+            
+        <div class="form-group col-md-2 mb-3">
+            <label for="fluxo">Fluxo</label>
+            <select class="form-control" name="fluxo" id="fluxo">
+                <option value="0">- Selecione um opção -</option>
+                <option value="1" selected="selected">Proxima Etapa do processo</option>
+                <option value="-1">voltar Etapa do processo</option>
+                {% if redir_editar.fluxo == 'REDIR' %}
+                    <option value="2" selected="selected">Concluir</option>
+                  
+                {% endif %}
+            </select>
+        </div>
+
+
+        <br>
+        {% if redir_editar.fluxo == 'REDIR' %}
+
+            <div class="form-group col-md-2 mb-3">
+                <label for="aprovar">Aprovar</label>
+                <select class="form-control" name="aprovar" id="aprovar">
+                    <option value="None">- Selecione um opção</option>
+                    <option value="Aprovado">Aprovado</option>
+                    <option value="Apreciado">Apreciado</option>
+                    <option value="Não Aprovado">Não Aprovado</option>
+                    <option value="Encaminhar para o Conselho">Encaminhar para o Conselho</option>
+                </select>
+            </div>
+        {% endif %}
+
+        <div class="col-md-4 mb-3">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-success">Atualizar</button>
+            </div>
+        </div>
+    </form>
+</main>
+
+{% endblock content %}

@@ -1,0 +1,9 @@
+env/
+db.sqlite.db
+apps/redir/migrations
+apps/usuario/migrations
+apps/redir/__pycache__/
+apps/usuario/__pycache__/
+setup/__pycache__/
+static/
+media/

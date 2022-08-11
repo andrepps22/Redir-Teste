@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}
+    <title>Redir | Visualizar</title>
+{% endblock titulo %}
+
+{% block content %}
+
+<header class="mx-sm-3">
+    <h2> Processo Redir</h2>
+
+    
+    <br><br>
+</header>
+<main class="mx-sm-3">
+    <form action="{% url 'redir.atualizar' %}" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <input type="text" name="redir_id" class="form-control" value="{{redir_view.id}}" hidden>
+        {% include "partials/_visualizar.html" %}
+        
+        {% if request.user.diretoria == 'DAF' %}
+            <div class="form-group">
+                <label for="parecer_daf">Parecer DAF</label>
+                <textarea class="form-control" name="parecer_daf" cols="30" rows="10" required disabled>{{redir_view.parecer_daf}}</textarea>
+            </div>
+        {% endif %}
+
+        <br>
+
+        {% if request.user.diretoria == 'DO-DSG' %}
+            <div class="form-group">
+                <label for="parecer_do">Parecer DO/DSG</label>
+                <textarea class="form-control" name="parecer_do" cols="30" rows="10" required disabled>{{redir_view.parecer_do}}</textarea>
+            </div>
+        {% endif %}
+
+        <br>
+        {% if request.user.diretoria == 'DP' %}
+            <div class="form-group">
+                <label for="parecer_dp">Parecer DP</label>
+                <textarea class="form-control" name="parecer_dp" cols="30" rows="10" required disabled>{{redir_view.parecer_dp}}</textarea>
+            </div>
+        {% endif %}
+
+        <br>
+
+        <div class="form-group">
+            <label for="parecer_daf">Parecer GGE</label>
+            <textarea class="form-control" name="parecer_daf" id="parecer_daf" cols="30"  rows="10" required disabled>{{redir_view.parecer_gge}}</textarea>
+        </div>
+        <br>
+    </form>
+</main>
+
+{% endblock content %}

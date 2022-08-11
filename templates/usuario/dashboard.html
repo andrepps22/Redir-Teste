@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <title>Redir | Inicio</title>
+{% endblock titulo %}
+
+{% block content %}
+
+    <h2 class="mx-sm-3 mb-5">Bem vindo, {{user.nome_completo}}</h2>
+
+{% include 'partials/_alertas.html' %}
+
+<caption>
+    <h5 style="text-align:center">Processos em Traminte</h5>
+</caption>
+<table class="table table-sm">
+
+    <thead>
+        <tr class="table-primary ">
+            <th scope="col" style="font-weight: bold;">Assunto</th>
+            <th scope="col" style="font-weight: bold;">Empresa</th>
+            <th scope="col" style="font-weight: bold;">Fluxo</th>
+            <th scope="col" style="font-weight: bold;">Anexo</th>
+            <th scope="col" style="font-weight: bold;">Area</th>
+            <th scope="col" style="font-weight: bold;">Status</th>
+            <th scope="col" style="font-weight: bold;">Ações</Th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if redir %}  <!--Checando se existe processo Redir Cadastrado-->
+
+            {% for processo in redir %}
+            
+                {% if processo.aprovar != 'Aprovado' %}
+                    <tr class="linha">
+                        <td scope="row">{{processo.assunto}}</td>
+                        <td scope="row">{{processo.empresa}}</td>
+                        <td scope="row">{{processo.fluxo}}</td>
+                        <td scope="row">
+                            {% if processo.anexo_arquivo %}
+                            <a href="{{processo.anexo_arquivo.url}}">sim</a>
+                            {% else %}
+                            Não
+                            {% endif %}
+                        </td>
+                        <td scope="row">{{processo.gerencia}}</td>
+                        <!--Checando se o status do processo-->
+                        {% if processo.aprovar == None or processo.aprovar == 'None' %}
+                            <td scope="row">Em Tramite</td>
+                        {% else %}
+                            <td scope="row">{{processo.aprovar}}</td>
+                        {% endif %}
+
+
+                        {% if processo.fluxo == request.user.cargo or request.user.cargo == processo.id %}
+                            <td scope="row">
+                                <a href="{% url 'redir.visualizar' processo.id %}" type="button" class="btn btn-info"
+                                    title="Visualizar">
+                                    <img src="{% static 'icon/eye.svg' %}" alt="">
+                                </a>
+                                <a href="{% url 'redir.editar' processo.id %}" type="button" class="btn btn-warning" title="Editar">
+                                    <img src="{% static 'icon/pencil-square.svg' %}" alt="">
+                                </a>
+                                <a href="{% url 'redir.deletar' processo.id %}" type="button" class="btn btn-danger" title="Deletar">
+                                    <img src="{% static 'icon/trash.svg' %}" alt="">
+                                </a>
+                            </td>
+                        {% elif request.user.cargo == 'Diretor' or request.user.gerencia == 'GGE' and processo.fluxo == 'REDIR' or request.user.gerencia == 'GGE' and processo.fluxo == 'GGE'%}
+                            <td scope="row">
+                                <a href="{% url 'redir.visualizar' processo.id %}" type="button" class="btn btn-info"
+                                    title="Visualizar">
+                                    <img src="{% static 'icon/eye.svg' %}" alt="">
+                                </a>
+                                <a href="{% url 'redir.editar' processo.id %}" type="button" class="btn btn-warning" title="Editar">
+                                    <img src="{% static 'icon/pencil-square.svg' %}" alt="">
+                                </a>
+                            </td>
+                        {% elif processo.aprovar != '' or processo.aprovar != 'None' %}
+                            <td>
+                                <a href="{% url 'redir.visualizar' processo.id %}" type="button" class="btn btn-info">
+                                    <img src="{% static 'icon/eye.svg' %}" alt="">
+                                </a>
+                            </td>
+                        {% endif %}
+
+                    </tr>
+                    
+
+                
+                {% endif %}
+
+            {% endfor %}
+
+        {% else %}
+            <td scope="row" class="col-2">Sem redir em tramite</td>
+        {% endif %}
+    </tbody>
+</table>
+
+
+{% endblock content %}
