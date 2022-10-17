@@ -75,10 +75,10 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 '''default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'redir_low',
-        'USER': 'ADMIN',
-        'PASSWORD': 'Kbx9pletjxsare4',
+        'ENGINE': '',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
     }'''
 
 
